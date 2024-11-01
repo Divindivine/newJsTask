@@ -1,0 +1,34 @@
+[
+  {
+    "customerid": 1,
+    "items": [{ "product": "car" }, { "product": "bike" }],
+    "totalPrice": 3000
+  },
+  {
+    "customerid": 2,
+    "items": [{ "product": "car" }, { "product": "bike" }],
+    "totalPrice": 3000
+  },
+
+  {
+    "customerid": 3,
+    "items": [{ "product": "car" }, { "product": "bike" }],
+    "totalPrice": 3000
+  },
+  {
+    "customerid": 1,
+    "items": [{ "product": "car" }, { "product": "bike" }],
+    "totalPrice": 3000
+  },
+  {
+    "customerid": 4,
+    "items": [{ "product": "car" }, { "product": "bike" }],
+    "totalPrice": 3000
+  },
+  {
+    "customerid": 3,
+    "items": [{ "product": "car" }, { "product": "bike" }],
+    "totalPrice": 3000
+  }
+]
+

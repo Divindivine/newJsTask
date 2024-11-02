@@ -79,15 +79,21 @@ const sortByName = (arr) => {
 
 const validateEmail = (email) => {
   const arr = email.split("");
-  let dot,
-    at = 0;
-  arr.map((character) => {
-    if (character === ".") dot = 1;
-    if (character === "@") at = 1;
+  if (arr.length > 320) return false;
+  let atSymbol = 0;
+  arr.map((character, index) => {
+    if (character === "@" || character === ".") {
+      if (index === 0 || index === arr.length - 1) atSymbol = 10;
+      if (character === "@") atSymbol++;
+    }
   });
-  if (dot === 1 && at === 1) return true;
+  if (atSymbol === 1) return true;
   return false;
 };
+
+console.log(
+  validateEmail("test.user-something-else+10@developer.apple.mod.com")
+)
 
 // -----------------------------------------------
 // Write a function that takes two sorted arrays of numbers as input and returns a new array containing all elements merged and sorted in ascending order.
@@ -210,4 +216,4 @@ const aggregateOrders = (arr, id) => {
   };
 };
 
-console.log(getLargestNumber([10, 2, 3, 4]));
+;

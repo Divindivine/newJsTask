@@ -52,14 +52,27 @@ const data = {
   detail: {
     place: {
       town: "mumbai",
-      pin: "673124"
-    }
-  }
+      pin: "673124",
+    },
+  },
 };
 
-const findValues = (obj, key, depth) => {
-  let answer = { isFound: false, value: null };
-  if (depth === -1) {return answer};
+type objectValueType = objectType | number | string | number[] | string[];
+
+type objectType = {
+  [key: string]: objectValueType;
+};
+
+type answerType = {
+  isFound: boolean;
+  value: null | objectValueType;
+};
+
+const findValues = (obj: objectType, key: string, depth: number) => {
+  let answer: answerType = { isFound: false, value: null };
+  if (depth === -1) {
+    return answer;
+  }
   depth -= 1;
   for (let tempKey in obj) {
     if (tempKey === key) {
@@ -68,11 +81,12 @@ const findValues = (obj, key, depth) => {
       return answer;
     }
     if (typeof obj[tempKey] === "object" && obj[tempKey] !== null) {
-      const nestedAnswer = findValues(obj[tempKey], key, depth);
+      const value = obj[tempKey] as objectType;
+      const nestedAnswer: answerType = findValues(value, key, depth);
       if (nestedAnswer.isFound) return nestedAnswer;
     }
   }
   return answer;
 };
 
-console.log(findValues(data, "pin", 2));
+console.log(findValues(data, "pin", 1));

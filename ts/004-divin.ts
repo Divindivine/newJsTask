@@ -50,13 +50,19 @@ scheduler.scheduleTask(myTask, 3000)
     .then(result => console.log(result))
     .catch(error => console.error(error));
 */
+type objectArrType = {
+  id: number;
+  timeOutId: number;
+};
 
 class TaskScheduler {
+  objectArr: objectArrType[];
+  id: number;
   constructor() {
-    this.objectArr = [];
+    this.objectArr = [{ id: 0, timeOutId: 0 }];
     this.id = 1;
   }
-  scheduleTask = (fun, delay = 2000) => {
+  scheduleTask = (fun: () => string, delay = 2000) => {
     console.log("eneterd");
     this.id = this.id + 1;
     if (typeof fun !== "function") throw new Error("task is not a function");
@@ -74,15 +80,15 @@ class TaskScheduler {
         this.objectArr = [...filterd];
       }, delay);
       const id = this.id;
-      const obj = {};
+      const obj: objectArrType = { id: 0, timeOutId: 0 };
       obj.id = id;
       obj.timeOutId = timeOut;
       this.objectArr.push(obj);
     });
-    return [this.id, promise];
+    return { id: this.id, promise: promise };
   };
-  cancelTask = (taskId) => {
-    const executed =  this.objectArr.find(element => element.id === taskId)
+  cancelTask = (taskId: number) => {
+    const executed = this.objectArr.find((element) => element.id === taskId);
     if (!executed) return Promise.reject("task not found or task has already executed");
     clearTimeout(executed.timeOutId);
     return Promise.resolve("task has canceled");
@@ -96,15 +102,15 @@ const myTask = () => {
   return "Task completed succesfully!";
 };
 
-const [id, promise] = scheduler.scheduleTask(myTask, 3000);
+const obj = scheduler.scheduleTask(myTask, 3000);
 
 setTimeout(() => {
   scheduler
-    .cancelTask(id)
+    .cancelTask(obj.id)
     .then((message) => console.log(message))
     .catch((error) => console.log("error: ", error));
 }, 4000);
 
-promise
+obj.promise
   .then((result) => console.log(result))
   .catch((error) => console.log("error :", error));

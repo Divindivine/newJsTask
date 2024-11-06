@@ -29,12 +29,16 @@ retryOperation(fetchData, 3, onSuccess)
 Make sure not to use .then and .catch. Instead use async/await.
 */
 
-async function retryOperation(fetchData, MaxTry, onSuccess) {
+async function retryOperation(
+  fetchData: () => Promise<string>,
+  MaxTry: number,
+  onSuccess: (data: string) => void
+) {
   let currentTry = 0;
   async function recursive() {
-    try{
+    try {
       currentTry++;
-      const result = await fetchData();
+      const result: string = await fetchData();
       onSuccess(result);
     } catch (error) {
       if (currentTry <= MaxTry) await recursive();
@@ -49,7 +53,7 @@ async function fetchData() {
   return "Data received";
 }
 
-function onSuccess(data) {
+function onSuccess(data: string) {
   console.log("Operation successful:", data);
 }
 
